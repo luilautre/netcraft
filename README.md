@@ -45,16 +45,11 @@
 ### Installation Automatique (Recommandé)
 
 1. **Dans Minecraft**, ouvrez un ordinateur ComputerCraft
-2. **Créez un fichier** `install.lua` avec l'éditeur de texte :
+2. **Exécutez** le script :
    ```
-   edit install.lua
+   pastebin run 5ykrv3fL
    ```
-3. **Copiez-collez** le contenu du script `install.lua` généré
-4. **Exécutez** le script :
-   ```
-   install
-   ```
-5. Tous les fichiers seront créés automatiquement !
+3. Tous les fichiers seront créés automatiquement !
 
 ### Installation Manuelle
 
