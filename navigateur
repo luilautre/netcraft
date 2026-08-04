@@ -1,0 +1,69 @@
+-- navigateur
+-- Point d'entrée principal de la commande NetCraft
+
+local args = {...}
+
+local function printHelp()
+    print("Usage: navigateur [commande] [args]")
+    print("Commandes:")
+    print("  createserver        - Créer et démarrer un serveur web")
+    print("  stopserver          - Arrêter le serveur web")
+    print("  status              - Afficher le statut du serveur")
+    print("  hostname <nom>      - Définir le nom d'hôte de l'ordinateur")
+    print("  <url>               - Ouvrir l'URL dans le navigateur")
+end
+
+if #args == 0 then
+    printHelp()
+    return
+end
+
+local cmd = args[1]
+
+if cmd == "createserver" then
+    local server = dofile("server.lua")
+    server.start()
+elseif cmd == "stopserver" then
+    local server = dofile("server.lua")
+    server.stop()
+elseif cmd == "status" then
+    local server = dofile("server.lua")
+    server.status()
+elseif cmd == "hostname" then
+    if args[2] then
+        local dns = dofile("dns.lua")
+        rednet.host("netcraft", args[2])
+        print("Nom d'hôte défini sur " .. args[2])
+    else
+        print("Usage: navigateur hostname <nom>")
+    end
+else
+    -- Ouvrir l'URL dans le navigateur
+    local browser = dofile("browser.lua")
+    browser.init()
+    browser.navigate(cmd)
+    
+    -- Boucle d'invite du navigateur
+    while true do
+        term.setCursorPos(1, 1)
+        term.clearLine()
+        term.setTextColor(colors.yellow)
+        write("[NC] " .. browser.currentUrl .. " > ")
+        term.setTextColor(colors.white)
+        
+        local input = read()
+        if input == "q" or input == "quit" then
+            break
+        elseif input == "back" or input == "b" then
+            browser.back()
+        elseif input == "forward" or input == "f" then
+            browser.forward()
+        elseif input == "bookmarks" or input == "bm" then
+            browser.showBookmarks()
+        elseif input == "add" then
+            browser.addBookmark()
+        elseif input ~= "" then
+            browser.navigate(input)
+        end
+    end
+end
