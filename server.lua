@@ -142,10 +142,10 @@ function server.start()
     print("Hote: " .. server.cfg.hostname)
     
     if server.cfg.protocol == "rednet" then
-        local modem = peripheral.find("modem")
-        if modem then
-            rednet.open(modem)
-            print("Ecoute sur Rednet via " .. modem)
+        local modemName, modem = peripheral.find("modem")
+        if modemName then
+            rednet.open(modemName)
+            print("Ecoute sur Rednet via " .. modemName)
         else
             print("Aucun modem trouve. Serveur Rednet desactive.")
         end

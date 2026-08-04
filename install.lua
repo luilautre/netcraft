@@ -1,5 +1,6 @@
 -- install.lua
--- Script d'installation automatique pour ComputerCraft
+-- Genere automatiquement par install.bat a partir des fichiers du projet.
+-- Copiez ce script sur votre ordinateur CC et executez-le pour deployer NetCraft.
 
 local files = {
     ["navigateur"] = [====[-- navigateur
@@ -216,10 +217,10 @@ function server.start()
     print("Hote: " .. server.cfg.hostname)
     
     if server.cfg.protocol == "rednet" then
-        local modem = peripheral.find("modem")
-        if modem then
-            rednet.open(modem)
-            print("Ecoute sur Rednet via " .. modem)
+        local modemName, modem = peripheral.find("modem")
+        if modemName then
+            rednet.open(modemName)
+            print("Ecoute sur Rednet via " .. modemName)
         else
             print("Aucun modem trouve. Serveur Rednet desactive.")
         end
@@ -648,8 +649,8 @@ dns.cache = {}
 
 local function ensureRednet()
     if not rednet.isOpen() then
-        local modem = peripheral.find("modem")
-        if modem then rednet.open(modem) end
+        local modemName = peripheral.find("modem")
+        if modemName then rednet.open(modemName) end
     end
 end
 
@@ -733,8 +734,8 @@ local dns = dofile("dns.lua")
 
 local function ensureRednet()
     if not rednet.isOpen() then
-        local modem = peripheral.find("modem")
-        if modem then rednet.open(modem) end
+        local modemName = peripheral.find("modem")
+        if modemName then rednet.open(modemName) end
     end
 end
 
@@ -937,4 +938,4 @@ for path, content in pairs(files) do
         print("Cree: " .. path)
     end
 end
-print("\n[OK] Installation de NetCraft terminee ! Tapez 'navigateur' pour commencer.")
+print("Installation de NetCraft terminee ! Tapez 'navigateur' pour commencer.")

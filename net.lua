@@ -6,8 +6,8 @@ local dns = dofile("dns.lua")
 
 local function ensureRednet()
     if not rednet.isOpen() then
-        local modem = peripheral.find("modem")
-        if modem then rednet.open(modem) end
+        local modemName = peripheral.find("modem")
+        if modemName then rednet.open(modemName) end
     end
 end
 
