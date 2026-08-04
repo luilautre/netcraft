@@ -77,7 +77,7 @@ function browser.navigate(url)
             print(content)
         end
     elseif status == 404 then
-        print("404 Non Trouvé: " .. url)
+        print("404 Non Trouve: " .. url)
     else
         print("Erreur " .. status .. ": " .. content)
     end
@@ -115,7 +115,7 @@ function browser.addBookmark()
     if browser.currentUrl ~= "" then
         table.insert(browser.bookmarks, browser.currentUrl)
         saveSystemConfig()
-        print("Signet ajouté: " .. browser.currentUrl)
+        print("Signet ajoute: " .. browser.currentUrl)
     end
 end
 
@@ -126,7 +126,7 @@ function browser.showBookmarks()
     for i, url in ipairs(browser.bookmarks) do
         print(i .. ". " .. url)
     end
-    print("\nEntrez un numéro pour ouvrir, ou 'b' pour retour:")
+    print("\nEntrez un numero pour ouvrir, ou 'b' pour retour:")
     local input = read()
     local num = tonumber(input)
     if num and browser.bookmarks[num] then

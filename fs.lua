@@ -40,7 +40,7 @@ function fsMod.clearCache()
         for _, file in ipairs(fs.list("system/cache")) do
             fs.delete(fs.combine("system/cache", file))
         end
-        print("Cache vidé avec succès.")
+        print("Cache vide avec succes.")
     end
 end
 

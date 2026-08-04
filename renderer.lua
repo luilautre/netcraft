@@ -125,7 +125,7 @@ function renderer.render(html)
         term.setBackgroundColor(colors.black)
         term.setTextColor(colors.red)
         print("\n[!] Cette page contient " .. #scripts .. " script(s) Lua.")
-        print("Voulez-vous les exécuter ? (o/n)")
+        print("Voulez-vous les executer ? (o/n)")
         term.setTextColor(colors.white)
         local choice = read()
         if choice == "o" or choice == "oui" then
@@ -136,13 +136,13 @@ function renderer.render(html)
                     setfenv(func, sandbox)
                     local ok, res = pcall(func)
                     if not ok then
-                        print("Erreur d'exécution: " .. tostring(res))
+                        print("Erreur d'execution: " .. tostring(res))
                     end
                 else
                     print("Erreur de syntaxe: " .. err)
                 end
             end
-            print("Scripts terminés. Appuyez sur Entrée pour continuer...")
+            print("Scripts termines. Appuyez sur Entree pour continuer...")
             read()
         end
     end

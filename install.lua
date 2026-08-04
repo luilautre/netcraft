@@ -3,17 +3,17 @@
 
 local files = {
     ["navigateur"] = [====[-- navigateur
--- Point d'entrée principal de la commande NetCraft
+-- Point d'entree principal de la commande NetCraft
 
 local args = {...}
 
 local function printHelp()
     print("Usage: navigateur [commande] [args]")
     print("Commandes:")
-    print("  createserver        - Créer et démarrer un serveur web")
-    print("  stopserver          - Arrêter le serveur web")
+    print("  createserver        - Creer et demarrer un serveur web")
+    print("  stopserver          - Arreter le serveur web")
     print("  status              - Afficher le statut du serveur")
-    print("  hostname <nom>      - Définir le nom d'hôte de l'ordinateur")
+    print("  hostname <nom>      - Definir le nom d'hote de l'ordinateur")
     print("  <url>               - Ouvrir l'URL dans le navigateur")
 end
 
@@ -37,7 +37,7 @@ elseif cmd == "hostname" then
     if args[2] then
         local dns = dofile("dns.lua")
         rednet.host("netcraft", args[2])
-        print("Nom d'hôte défini sur " .. args[2])
+        print("Nom d'hote defini sur " .. args[2])
     else
         print("Usage: navigateur hostname <nom>")
     end
@@ -73,7 +73,7 @@ else
 end
 ]====],
     ["server.lua"] = [====[-- server.lua
--- Serveur HTTP/NetCraft gérant les requêtes et le routage
+-- Serveur HTTP/NetCraft gerant les requetes et le routage
 
 local server = {}
 server.running = false
@@ -130,7 +130,7 @@ local function serveFile(path)
             return 200, content, getMimeType(fullPath)
         end
     end
-    return 404, "<html><body><h1>404 Non Trouvé</h1></body></html>", "text/html"
+    return 404, "<html><body><h1>404 Non Trouve</h1></body></html>", "text/html"
 end
 
 local function serveDir(path)
@@ -144,7 +144,7 @@ local function serveDir(path)
         html = html .. "</ul></body></html>"
         return 200, html, "text/html"
     end
-    return 404, "<html><body><h1>404 Non Trouvé</h1></body></html>", "text/html"
+    return 404, "<html><body><h1>404 Non Trouve</h1></body></html>", "text/html"
 end
 
 local function executeApp(path, method, postData)
@@ -175,7 +175,7 @@ local function executeApp(path, method, postData)
             return 500, "<html><body><h1>500 Erreur Interne</h1><p>" .. err .. "</p></body></html>", "text/html"
         end
     end
-    return 404, "<html><body><h1>404 Non Trouvé</h1></body></html>", "text/html"
+    return 404, "<html><body><h1>404 Non Trouve</h1></body></html>", "text/html"
 end
 
 local function handleRequest(req)
@@ -195,7 +195,7 @@ end
 
 function server.start()
     if server.running then
-        print("Le serveur est déjà en cours d'exécution.")
+        print("Le serveur est deja en cours d'execution.")
         return
     end
     
@@ -207,21 +207,21 @@ function server.start()
     
     if not fs.exists("www/index.html") then
         local f = fs.open("www/index.html", "w")
-        f.writeLine("<html><head><title>NetCraft</title></head><body><h1>Bienvenue sur NetCraft</h1><p>Ça marche !</p></body></html>")
+        f.writeLine("<html><head><title>NetCraft</title></head><body><h1>Bienvenue sur NetCraft</h1><p>Ca marche !</p></body></html>")
         f.close()
     end
     
     server.running = true
-    print("Démarrage du Serveur NetCraft...")
-    print("Hôte: " .. server.cfg.hostname)
+    print("Demarrage du Serveur NetCraft...")
+    print("Hote: " .. server.cfg.hostname)
     
     if server.cfg.protocol == "rednet" then
         local modem = peripheral.find("modem")
         if modem then
             rednet.open(modem)
-            print("Écoute sur Rednet via " .. modem)
+            print("Ecoute sur Rednet via " .. modem)
         else
-            print("Aucun modem trouvé. Serveur Rednet désactivé.")
+            print("Aucun modem trouve. Serveur Rednet desactive.")
         end
     end
     
@@ -242,7 +242,7 @@ function server.start()
             server.running = false
         end
     end
-    print("Serveur arrêté.")
+    print("Serveur arrete.")
 end
 
 function server.stop()
@@ -254,7 +254,7 @@ function server.status()
     loadConfig()
     print("Statut du Serveur NetCraft")
     print("--------------------------")
-    print("Hôte:     " .. server.cfg.hostname)
+    print("Hote:     " .. server.cfg.hostname)
     print("Protocole:" .. server.cfg.protocol)
     print("Statut:   " .. (server.running and "En ligne" or "Hors ligne"))
 end
@@ -348,7 +348,7 @@ function browser.navigate(url)
             print(content)
         end
     elseif status == 404 then
-        print("404 Non Trouvé: " .. url)
+        print("404 Non Trouve: " .. url)
     else
         print("Erreur " .. status .. ": " .. content)
     end
@@ -386,7 +386,7 @@ function browser.addBookmark()
     if browser.currentUrl ~= "" then
         table.insert(browser.bookmarks, browser.currentUrl)
         saveSystemConfig()
-        print("Signet ajouté: " .. browser.currentUrl)
+        print("Signet ajoute: " .. browser.currentUrl)
     end
 end
 
@@ -397,7 +397,7 @@ function browser.showBookmarks()
     for i, url in ipairs(browser.bookmarks) do
         print(i .. ". " .. url)
     end
-    print("\nEntrez un numéro pour ouvrir, ou 'b' pour retour:")
+    print("\nEntrez un numero pour ouvrir, ou 'b' pour retour:")
     local input = read()
     local num = tonumber(input)
     if num and browser.bookmarks[num] then
@@ -540,7 +540,7 @@ function renderer.render(html)
         term.setBackgroundColor(colors.black)
         term.setTextColor(colors.red)
         print("\n[!] Cette page contient " .. #scripts .. " script(s) Lua.")
-        print("Voulez-vous les exécuter ? (o/n)")
+        print("Voulez-vous les executer ? (o/n)")
         term.setTextColor(colors.white)
         local choice = read()
         if choice == "o" or choice == "oui" then
@@ -551,13 +551,13 @@ function renderer.render(html)
                     setfenv(func, sandbox)
                     local ok, res = pcall(func)
                     if not ok then
-                        print("Erreur d'exécution: " .. tostring(res))
+                        print("Erreur d'execution: " .. tostring(res))
                     end
                 else
                     print("Erreur de syntaxe: " .. err)
                 end
             end
-            print("Scripts terminés. Appuyez sur Entrée pour continuer...")
+            print("Scripts termines. Appuyez sur Entree pour continuer...")
             read()
         end
     end
@@ -567,7 +567,7 @@ end
 return renderer
 ]====],
     ["parser.lua"] = [====[-- parser.lua
--- Parseur HTML simple créant une arborescence DOM
+-- Parseur HTML simple creant une arborescence DOM
 
 local parser = {}
 
@@ -641,7 +641,7 @@ end
 return parser
 ]====],
     ["dns.lua"] = [====[-- dns.lua
--- Résolution de noms et cache DNS via Rednet
+-- Resolution de noms et cache DNS via Rednet
 
 local dns = {}
 dns.cache = {}
@@ -715,7 +715,7 @@ local args = {...}
 if #args > 0 then
     if args[1] == "resolve" and args[2] then
         local id = dns.resolve(args[2])
-        if id then print(args[2] .. " -> " .. id) else print("Impossible de résoudre " .. args[2]) end
+        if id then print(args[2] .. " -> " .. id) else print("Impossible de resoudre " .. args[2]) end
     elseif args[1] == "set" and args[2] and args[3] then
         dns.set(args[2], tonumber(args[3]))
     else
@@ -726,7 +726,7 @@ end
 return dns
 ]====],
     ["net.lua"] = [====[-- net.lua
--- Abstraction réseau pour le protocole net://
+-- Abstraction reseau pour le protocole net://
 
 local net = {}
 local dns = dofile("dns.lua")
@@ -743,7 +743,7 @@ function net.get(url)
     if not hostname then return 400, "URL Invalide", "text/plain" end
     
     local id = dns.resolve(hostname)
-    if not id then return 502, "Passerelle incorrecte: Hôte introuvable", "text/plain" end
+    if not id then return 502, "Passerelle incorrecte: Hote introuvable", "text/plain" end
     
     ensureRednet()
     rednet.send(id, { request = { method = "GET", path = path == "" and "/" or path } }, "netcraft")
@@ -758,7 +758,7 @@ function net.get(url)
                 return msg.status, msg.content, msg.mime
             end
         elseif event[1] == "timer" and event[2] == timer then
-            return 504, "Délai d'attente dépassé", "text/plain"
+            return 504, "Delai d'attente depasse", "text/plain"
         end
     end
 end
@@ -768,7 +768,7 @@ function net.post(url, data)
     if not hostname then return 400, "URL Invalide", "text/plain" end
     
     local id = dns.resolve(hostname)
-    if not id then return 502, "Passerelle incorrecte: Hôte introuvable", "text/plain" end
+    if not id then return 502, "Passerelle incorrecte: Hote introuvable", "text/plain" end
     
     ensureRednet()
     rednet.send(id, { request = { method = "POST", path = path == "" and "/" or path, body = data } }, "netcraft")
@@ -783,7 +783,7 @@ function net.post(url, data)
                 return msg.status, msg.content, msg.mime
             end
         elseif event[1] == "timer" and event[2] == timer then
-            return 504, "Délai d'attente dépassé", "text/plain"
+            return 504, "Delai d'attente depasse", "text/plain"
         end
     end
 end
@@ -832,7 +832,7 @@ function fsMod.clearCache()
         for _, file in ipairs(fs.list("system/cache")) do
             fs.delete(fs.combine("system/cache", file))
         end
-        print("Cache vidé avec succès.")
+        print("Cache vide avec succes.")
     end
 end
 
@@ -845,7 +845,7 @@ end
 return fsMod
 ]====],
     ["api.lua"] = [====[-- api.lua
--- API publique pour les développeurs d'applications
+-- API publique pour les developpeurs d'applications
 
 local net = dofile("net.lua")
 local renderer = dofile("renderer.lua")
@@ -861,7 +861,7 @@ function api.post(url, data)
 end
 
 function api.listen(port)
-    print("Utilisez 'navigateur createserver' pour démarrer un écouteur.")
+    print("Utilisez 'navigateur createserver' pour demarrer un ecouteur.")
 end
 
 function api.render(html)
@@ -888,9 +888,9 @@ protocol=rednet
 </head>
 <body>
     <h1>Bienvenue sur NetCraft</h1>
-    <p>Ceci est la page d'accueil par défaut générée par votre serveur.</p>
+    <p>Ceci est la page d'accueil par defaut generee par votre serveur.</p>
     <h2>Liens de test</h2>
-    <a href="net://wiki">Wiki (Hôte distant)</a> | <a href="/apps/hello.lua">Application Lua Locale</a>
+    <a href="net://wiki">Wiki (Hote distant)</a> | <a href="/apps/hello.lua">Application Lua Locale</a>
     <br>
     <h2>Formulaire</h2>
     <form action="/apps/hello.lua" method="POST">
@@ -898,28 +898,28 @@ protocol=rednet
         <button>Envoyer</button>
     </form>
     <script type="lua">
-        print("Script Lua exécuté côté client !")
+        print("Script Lua execute cote client !")
     </script>
 </body>
 </html>
 ]====],
     ["www/404.html"] = [====[<html>
 <head>
-    <title>404 Non Trouvé</title>
+    <title>404 Non Trouve</title>
 </head>
 <body>
-    <h1>404 - Page Non Trouvée</h1>
+    <h1>404 - Page Non Trouvee</h1>
     <p>La ressource que vous cherchez n'existe pas sur ce serveur NetCraft.</p>
-    <a href="net://localhost/">Retour à l'accueil</a>
+    <a href="net://localhost/">Retour a l'accueil</a>
 </body>
 </html>
 ]====],
     ["apps/hello.lua"] = [====[print("<html><body>")
 print("<h1>Bonjour le monde !</h1>")
 print("<p>Heure actuelle du serveur : " .. os.date("%H:%M:%S") .. "</p>")
-print("<p>Méthode HTTP reçue : " .. method .. "</p>")
+print("<p>Methode HTTP recue : " .. method .. "</p>")
 if method == "POST" then
-    print("<p>Données reçues : " .. (post or "Aucune") .. "</p>")
+    print("<p>Donnees recues : " .. (post or "Aucune") .. "</p>")
 end
 print("</body></html>")
 ]====],
@@ -934,7 +934,7 @@ for path, content in pairs(files) do
     if f then
         f.write(content)
         f.close()
-        print("Créé: " .. path)
+        print("Cree: " .. path)
     end
 end
-print("\n✅ Installation de NetCraft terminée ! Tapez 'navigateur' pour commencer.")
+print("\n[OK] Installation de NetCraft terminee ! Tapez 'navigateur' pour commencer.")

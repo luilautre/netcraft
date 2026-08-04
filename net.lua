@@ -1,5 +1,5 @@
 -- net.lua
--- Abstraction réseau pour le protocole net://
+-- Abstraction reseau pour le protocole net://
 
 local net = {}
 local dns = dofile("dns.lua")
@@ -16,7 +16,7 @@ function net.get(url)
     if not hostname then return 400, "URL Invalide", "text/plain" end
     
     local id = dns.resolve(hostname)
-    if not id then return 502, "Passerelle incorrecte: Hôte introuvable", "text/plain" end
+    if not id then return 502, "Passerelle incorrecte: Hote introuvable", "text/plain" end
     
     ensureRednet()
     rednet.send(id, { request = { method = "GET", path = path == "" and "/" or path } }, "netcraft")
@@ -31,7 +31,7 @@ function net.get(url)
                 return msg.status, msg.content, msg.mime
             end
         elseif event[1] == "timer" and event[2] == timer then
-            return 504, "Délai d'attente dépassé", "text/plain"
+            return 504, "Delai d'attente depasse", "text/plain"
         end
     end
 end
@@ -41,7 +41,7 @@ function net.post(url, data)
     if not hostname then return 400, "URL Invalide", "text/plain" end
     
     local id = dns.resolve(hostname)
-    if not id then return 502, "Passerelle incorrecte: Hôte introuvable", "text/plain" end
+    if not id then return 502, "Passerelle incorrecte: Hote introuvable", "text/plain" end
     
     ensureRednet()
     rednet.send(id, { request = { method = "POST", path = path == "" and "/" or path, body = data } }, "netcraft")
@@ -56,7 +56,7 @@ function net.post(url, data)
                 return msg.status, msg.content, msg.mime
             end
         elseif event[1] == "timer" and event[2] == timer then
-            return 504, "Délai d'attente dépassé", "text/plain"
+            return 504, "Delai d'attente depasse", "text/plain"
         end
     end
 end

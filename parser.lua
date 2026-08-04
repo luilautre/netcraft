@@ -1,5 +1,5 @@
 -- parser.lua
--- Parseur HTML simple créant une arborescence DOM
+-- Parseur HTML simple creant une arborescence DOM
 
 local parser = {}
 

@@ -1,5 +1,5 @@
 -- server.lua
--- Serveur HTTP/NetCraft gérant les requêtes et le routage
+-- Serveur HTTP/NetCraft gerant les requetes et le routage
 
 local server = {}
 server.running = false
@@ -56,7 +56,7 @@ local function serveFile(path)
             return 200, content, getMimeType(fullPath)
         end
     end
-    return 404, "<html><body><h1>404 Non Trouvé</h1></body></html>", "text/html"
+    return 404, "<html><body><h1>404 Non Trouve</h1></body></html>", "text/html"
 end
 
 local function serveDir(path)
@@ -70,7 +70,7 @@ local function serveDir(path)
         html = html .. "</ul></body></html>"
         return 200, html, "text/html"
     end
-    return 404, "<html><body><h1>404 Non Trouvé</h1></body></html>", "text/html"
+    return 404, "<html><body><h1>404 Non Trouve</h1></body></html>", "text/html"
 end
 
 local function executeApp(path, method, postData)
@@ -101,7 +101,7 @@ local function executeApp(path, method, postData)
             return 500, "<html><body><h1>500 Erreur Interne</h1><p>" .. err .. "</p></body></html>", "text/html"
         end
     end
-    return 404, "<html><body><h1>404 Non Trouvé</h1></body></html>", "text/html"
+    return 404, "<html><body><h1>404 Non Trouve</h1></body></html>", "text/html"
 end
 
 local function handleRequest(req)
@@ -121,7 +121,7 @@ end
 
 function server.start()
     if server.running then
-        print("Le serveur est déjà en cours d'exécution.")
+        print("Le serveur est deja en cours d'execution.")
         return
     end
     
@@ -133,21 +133,21 @@ function server.start()
     
     if not fs.exists("www/index.html") then
         local f = fs.open("www/index.html", "w")
-        f.writeLine("<html><head><title>NetCraft</title></head><body><h1>Bienvenue sur NetCraft</h1><p>Ça marche !</p></body></html>")
+        f.writeLine("<html><head><title>NetCraft</title></head><body><h1>Bienvenue sur NetCraft</h1><p>Ca marche !</p></body></html>")
         f.close()
     end
     
     server.running = true
-    print("Démarrage du Serveur NetCraft...")
-    print("Hôte: " .. server.cfg.hostname)
+    print("Demarrage du Serveur NetCraft...")
+    print("Hote: " .. server.cfg.hostname)
     
     if server.cfg.protocol == "rednet" then
         local modem = peripheral.find("modem")
         if modem then
             rednet.open(modem)
-            print("Écoute sur Rednet via " .. modem)
+            print("Ecoute sur Rednet via " .. modem)
         else
-            print("Aucun modem trouvé. Serveur Rednet désactivé.")
+            print("Aucun modem trouve. Serveur Rednet desactive.")
         end
     end
     
@@ -168,7 +168,7 @@ function server.start()
             server.running = false
         end
     end
-    print("Serveur arrêté.")
+    print("Serveur arrete.")
 end
 
 function server.stop()
@@ -180,7 +180,7 @@ function server.status()
     loadConfig()
     print("Statut du Serveur NetCraft")
     print("--------------------------")
-    print("Hôte:     " .. server.cfg.hostname)
+    print("Hote:     " .. server.cfg.hostname)
     print("Protocole:" .. server.cfg.protocol)
     print("Statut:   " .. (server.running and "En ligne" or "Hors ligne"))
 end

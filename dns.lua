@@ -1,5 +1,5 @@
 -- dns.lua
--- Résolution de noms et cache DNS via Rednet
+-- Resolution de noms et cache DNS via Rednet
 
 local dns = {}
 dns.cache = {}
@@ -73,7 +73,7 @@ local args = {...}
 if #args > 0 then
     if args[1] == "resolve" and args[2] then
         local id = dns.resolve(args[2])
-        if id then print(args[2] .. " -> " .. id) else print("Impossible de résoudre " .. args[2]) end
+        if id then print(args[2] .. " -> " .. id) else print("Impossible de resoudre " .. args[2]) end
     elseif args[1] == "set" and args[2] and args[3] then
         dns.set(args[2], tonumber(args[3]))
     else

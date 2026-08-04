@@ -1,5 +1,5 @@
 -- api.lua
--- API publique pour les développeurs d'applications
+-- API publique pour les developpeurs d'applications
 
 local net = dofile("net.lua")
 local renderer = dofile("renderer.lua")
@@ -15,7 +15,7 @@ function api.post(url, data)
 end
 
 function api.listen(port)
-    print("Utilisez 'navigateur createserver' pour démarrer un écouteur.")
+    print("Utilisez 'navigateur createserver' pour demarrer un ecouteur.")
 end
 
 function api.render(html)
